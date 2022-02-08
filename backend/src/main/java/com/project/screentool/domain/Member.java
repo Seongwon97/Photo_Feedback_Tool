@@ -19,7 +19,7 @@ public class Member {
     private String username;
     private String credential;
     private String email;
-    private String phone_number;
+    private String phoneNumber;
 
     @Embedded
     private Address address;
