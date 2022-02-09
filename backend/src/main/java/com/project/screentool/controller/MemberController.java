@@ -5,6 +5,7 @@ import com.project.screentool.service.MemberService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 public class MemberController {
@@ -35,11 +37,47 @@ public class MemberController {
     /**
      * 비밀번호 찾기
      */
-    @GetMapping("/member/findpassword")
+    @GetMapping("/member/findpwd")
     public FindPasswordResponse findPassword(@RequestBody @Valid FindPasswordRequest findPasswordRequest) {
         String password = memberService.findPassword(findPasswordRequest.email);
 
         return new FindPasswordResponse(password);
+    }
+
+    /**
+     * 비밀번호 변경
+     */
+    @PostMapping("/member/changepwd")
+    public void changePassword(@RequestBody @Valid ChangePasswordRequest changePasswordRequest) {
+        String previousPassword = memberService.changePassword(changePasswordRequest.id, changePasswordRequest.newPassword);
+        log.info("Change Password : " + previousPassword + " -> " + changePasswordRequest.newPassword);
+    }
+
+    /**
+     * 회원정보 수정
+     */
+    @PostMapping("/member/updateinfo")
+    public void updateMemberInfo(@RequestBody @Valid ChangeMemberRequst changeMemberRequst) {
+        memberService.updateMemberInfo(changeMemberRequst);
+        log.info("Complete change member info");
+    }
+
+    /**
+     * 회원 탈퇴
+     */
+
+    @Data
+    public static class ChangeMemberRequst {
+        private Long id;
+        private String username;
+        private String email;
+        private String phoneNumber;
+    }
+
+    @Data
+    static class ChangePasswordRequest {
+        private Long id;
+        private String newPassword;
     }
 
     @Data

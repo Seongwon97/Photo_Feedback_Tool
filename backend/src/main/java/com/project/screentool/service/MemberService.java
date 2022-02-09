@@ -1,5 +1,6 @@
 package com.project.screentool.service;
 
+import com.project.screentool.controller.MemberController;
 import com.project.screentool.domain.Member;
 import com.project.screentool.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -32,19 +33,20 @@ public class MemberService {
     }
 
     @Transactional
-    public void changePassword(Long id, String newPassword) {
+    public String changePassword(Long id, String newPassword) {
         Member member = memberRepository.findMember(id);
+        String previousPassword = member.getCredential();
         member.setCredential(newPassword);
+        return previousPassword;
     }
 
     @Transactional
-    public void changeMemberInfo(Long id, Member member) {
-        Member findMember = memberRepository.findMember(id);
+    public void updateMemberInfo(MemberController.ChangeMemberRequst member) {
+        Member findMember = memberRepository.findMember(member.getId());
         findMember.setEmail(member.getEmail());
         findMember.setPhoneNumber(member.getPhoneNumber());
         findMember.setUsername(member.getUsername());
-        findMember.setAddress(member.getAddress());
-
+//        findMember.setAddress(member.getAddress());
     }
 
     @Transactional
