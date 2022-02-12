@@ -24,7 +24,7 @@ public class MemberController {
      * 회원가입
      */
     @PostMapping("/member/signup")
-    public SignUpMemberResponse singUp(@RequestBody @Valid MemberController.SignUpMemberRequest memberDto) {
+    public SignUpMemberResponse singUp(@RequestBody @Valid SignUpMemberRequest memberDto) {
         Member member = new Member(memberDto.username,
                 memberDto.credential,
                 memberDto.email,

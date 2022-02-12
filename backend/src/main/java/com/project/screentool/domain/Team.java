@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -22,10 +23,10 @@ public class Team {
     private LocalDateTime lastModifiedDate;
 
     @OneToMany(mappedBy = "team")
-    private List<Member> memberList;
+    private List<Member> memberList = new ArrayList<>();
 
     @OneToMany(mappedBy = "team")
-    private List<Project> projectList;
+    private List<Project> projectList = new ArrayList<>();
 
     public void addMember(Member member) {
         this.memberList.add(member);
