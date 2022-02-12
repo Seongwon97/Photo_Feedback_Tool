@@ -65,6 +65,10 @@ public class MemberController {
     /**
      * 회원 탈퇴
      */
+    @GetMapping("/member/withdraw")
+    public void withdraw(@RequestBody @Valid WithdrawRequest withdrawRequest) {
+        memberService.withdraw(withdrawRequest.getId());
+    }
 
     @Data
     public static class ChangeMemberRequst {
@@ -104,5 +108,10 @@ public class MemberController {
     static class SignUpMemberResponse {
         private Long id;
         private String userName;
+    }
+
+    @Data
+    static class WithdrawRequest {
+        private Long id;
     }
 }
