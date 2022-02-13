@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
@@ -18,5 +19,11 @@ public class TeamRepository {
         team.setLastModifiedDate(LocalDateTime.now());
         em.persist(team);
         return team.getId();
+    }
+
+    public List<Team> findTeamByName(String name) {
+        return em.createQuery("select t from Team t where t.name =: team")
+                .setParameter("team", name)
+                .getResultList();
     }
 }
