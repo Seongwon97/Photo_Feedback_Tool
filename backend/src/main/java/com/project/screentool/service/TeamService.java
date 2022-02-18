@@ -35,5 +35,14 @@ public class TeamService {
         return team.get(0);
     }
 
+    @Transactional
+    public Team joinTeam(Long memberId, String teamName) {
+        Member member = memberRepository.findMember(memberId);
+        Team team = teamRepository.findTeamByName(teamName).get(0);
+
+        teamRepository.addMember(team, member);
+        return team;
+    }
+
 
 }

@@ -34,6 +34,13 @@ public class TeamController {
         return null;
     }
 
+    @PostMapping("/team/join")
+    public String joinTeam(@RequestBody @Valid JoinTeamRequest joinTeamRequest) {
+        teamService.joinTeam(joinTeamRequest.getMemberId(), joinTeamRequest.teamName);
+        return "가입되었습니다.";
+    }
+
+
     @Data
     static private class CreateTeamRequest {
         private String teamName;
@@ -53,5 +60,12 @@ public class TeamController {
         private Long teamId;
         private String teamName;
         private LocalDateTime generateDate;
+    }
+
+    @Data
+    @AllArgsConstructor
+    static private class JoinTeamRequest {
+        private Long memberId;
+        private String teamName;
     }
 }

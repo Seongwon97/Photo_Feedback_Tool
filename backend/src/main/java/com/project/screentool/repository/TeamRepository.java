@@ -1,5 +1,6 @@
 package com.project.screentool.repository;
 
+import com.project.screentool.domain.Member;
 import com.project.screentool.domain.Team;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -25,5 +26,10 @@ public class TeamRepository {
         return em.createQuery("select t from Team t where t.name =: team")
                 .setParameter("team", name)
                 .getResultList();
+    }
+
+    public void addMember(Team team, Member member) {
+        team.addMember(member);
+        em.persist(team);
     }
 }
